@@ -14,7 +14,6 @@ module purge
 module load prgenv/intel openmpi netcdf4-parallel
 module list
 
-. ./env.ksh
 #########################################################################
 #
 #########################################################################
@@ -24,7 +23,7 @@ MAINDIR=$PERM/nemo_4.2.0
 XIODIR=/perm/ar5/LIBS/intel/xios_trunk_r2311
 
 #Configuration name
-CONFIG1=GLO
+CONFIG=GLO
 
 #directories
 AWUSER=${SCRATCH}
@@ -32,32 +31,32 @@ CTLDIR=`/bin/pwd`
 RUNDIR=$AWUSER/${CONFIG}-RUN
 INDIR=$AWUSER/ORCA36-BENCH
 
+#procs total and per nodes numbers
+NEMO_PROCS=9984
+XIOS_PROCS=100
+NEMO_DIST=128
+XIOS_DIST=1
+
 #########################################################################
 #
 #########################################################################
-mkdir -p ${DIRRUN} ; cd ${DIRRUN}
+mkdir -p ${RUNDIR} ; cd ${RUNDIR}
 
 #EXECUTABLES
-cp ${XIODIR}/bin/xios_server.exe ${DIRRUN}
-cp ${MAINDIR}/cfgs/${CONFIG1}/BLD/bin/nemo.exe ${DIRRUN}
+cp ${XIODIR}/bin/xios_server.exe ${RUNDIR}
+cp ${MAINDIR}/cfgs/${CONFIG}/BLD/bin/nemo.exe ${RUNDIR}
 
 #NAMLST & XML 
-cp ${CTLDIR}/NAMLST/namelist* ${DIRRUN} 
-cp ${CTLDIR}/XML/*.xml ${DIRRUN} 
+cp ${CTLDIR}/NAMLST/namelist* ${RUNDIR} 
+cp ${CTLDIR}/XML/*.xml ${RUNDIR} 
 
 #Configuration & forcing files
-ln -sf ${INDIR}/*.nc ${DIRRUN}
-
-
-#########################################################################
-#
-#########################################################################
-
+ln -sf ${INDIR}/*.nc ${RUNDIR}
 
 #########################################################################
 #
 #########################################################################
-cd ${DIRRUN}
+cd ${RUNDIR}
 
 MULTIPROG_CONF=config_file
 BIN_NEMO=nemo.exe
