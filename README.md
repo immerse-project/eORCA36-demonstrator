@@ -1,4 +1,4 @@
-# eORCA36-demonstrator
+# eORCA36 demonstrator
 
 This page describe the way to build the extended 1/36° global configuration (eORCA36) based on  [NEMO OGCM](https://www.nemo-ocean.eu/).
 
