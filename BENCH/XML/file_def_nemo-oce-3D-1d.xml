@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+
+      <file_group id="1d" output_freq="1d"   split_freq="1d"  output_level="10" enabled=".TRUE.">  <!-- 7d files -->   
+
+        <file id="file21" name_suffix="_gridT" description="ocean T grid variables" >
+          <field field_ref="e3t"      />
+          <field field_ref="toce"         name="thetao"    operation="instant" freq_op="1d" > @toce_e3t / @e3t </field>
+          <field field_ref="soce"         name="so"        operation="instant" freq_op="1d" > @soce_e3t / @e3t </field>
+	</file>
+
+
+	<file id="file22" name_suffix="_gridU" description="ocean U grid variables" >
+	  <field field_ref="e3u"                          />
+	  <field field_ref="uoce"         name="uo"       operation="instant" freq_op="1d" > @uoce_e3u / @e3u </field>
+	  <field field_ref="utau"         name="tauuo"    />
+	</file>
+	
+	<file id="file23" name_suffix="_gridV" description="ocean V grid variables" >
+	  <field field_ref="e3v"                          />
+	  <field field_ref="voce"         name="vo"       operation="instant" freq_op="1d" > @voce_e3v / @e3v </field>
+	  <field field_ref="vtau"         name="tauvo"    />
+	</file>
+	
+	<file id="file24" name_suffix="_gridW" description="ocean W grid variables" >
+	  <field field_ref="e3w" />
+	  <field field_ref="woce"         name="wo"       />
+	  <field field_ref="avt"          name="difvho"   />
+	</file>
+
+       <file id="file25" name_suffix="_SBC" description="surface fluxes variables" enabled=".TRUE." > <!-- time step automaticaly defined based on nn_fsbc -->
+          <field field_ref="ssh"          name="sossheig" />
+          <field field_ref="mldr10_1"     name="somxl010" />
+          <field field_ref="mldkz5"       name="somixhgt" />
+          <field field_ref="empmr"        name="sowaflup" />
+          <field field_ref="qsr"          name="soshfldo" />
+          <field field_ref="saltflx"      name="sosfldow" />
+          <field field_ref="qt"           name="sohefldo" />
+          <field field_ref="precip"       name="precip"   />
+          <field field_ref="saltflx"      name="sfx"      />
+          <field field_ref="taum"         name="taum"     />
+          <field field_ref="wspd"         name="windsp"   />
+       </file>
+
+      </file_group> 

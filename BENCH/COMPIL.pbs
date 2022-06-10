@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH -J C36T431
+#SBATCH --qos=nf
+#SBATCH --mem-per-cpu=4G
+#SBATCH --ntasks=20
+#SBATCH --time=00:30:00
+#SBATCH -o C36T431.out
+#SBATCH -e C36T431.err
+#set -xv
+
+export QSUB_WORKDIR=`/bin/pwd`
+cd $QSUB_WORKDIR
+
+module purge
+module load prgenv/intel openmpi netcdf4-parallel
+module list
+
+#########################################################################
+#
+#########################################################################
+MAINDIR=$PERM/nemo_4.2.0
+CONFIG1=GLO
+COMPIL=ifort_intelmpi_aa_xios
+
+cd ${MAINDIR}
+bash makenemo -r ${CONFIG1} -m ${COMPIL}     -j 20 clean
+bash makenemo -r ${CONFIG1} -m ${COMPIL}     -j 20
+
+#########################################################################
+##                                END                                  ##
+#########################################################################

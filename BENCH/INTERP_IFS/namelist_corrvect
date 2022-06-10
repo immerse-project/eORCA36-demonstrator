@@ -1,0 +1,49 @@
+
+!=====================================================
+&ninput
+ivect     = 1
+lregin    = .FALSE.
+cf_in     = 'CFIN'
+cv_t_in   = 'time_counter'
+cv_in     = 'CVIN'
+jt1       = 0
+jt2       = 0
+jplev     = -1
+!cf_x_in   = 'CGIN'
+cv_lon_in = 'glamt'
+cv_lat_in = 'gphit'
+cf_lsm_in = 'missing_value'
+idrown    = 0
+ewper     = 1
+!vmax      =  ZMAX
+!vmin      =  ZMIN
+ismooth   = 0
+/
+!=====================================================
+&nhtarget
+lregout    = F
+cf_x_out   = 'CGOUT'
+cv_lon_out = 'glamt'
+cv_lat_out = 'gphit'
+cf_lsm_out = ''
+cv_lsm_out = ''
+lmout      = F
+rmaskvalue = -9999.
+lct        = F
+t0         = 0.
+t_stp      = 1.
+/
+!=====================================================
+&noutput
+cmethod  = 'rotvec'
+cv_t_out = 'time_counter'
+cv_out   = 'CVIN'
+cu_out   = ''
+cln_out  = ''
+cd_out   = '.'
+!!
+csource  = 'GAUSS1280'
+ctarget  = 'eORCA36'
+cextra   = ''
+/
+!=====================================================

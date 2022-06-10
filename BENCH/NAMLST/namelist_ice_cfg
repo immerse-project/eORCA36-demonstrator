@@ -1,0 +1,113 @@
+!!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+!! SI3 Reference namelist:
+!!              1 - Generic parameters                 (nampar)
+!!              2 - Ice thickness discretization       (namitd)
+!!              3 - Ice dynamics                       (namdyn)
+!!              4 - Ice ridging/rafting                (namdyn_rdgrft)
+!!              5 - Ice rheology                       (namdyn_rhg)
+!!              6 - Ice advection                      (namdyn_adv)
+!!              7 - Ice surface boundary conditions    (namsbc)
+!!              8 - Ice thermodynamics                 (namthd)
+!!              9 - Ice heat diffusion                 (namthd_zdf)
+!!             10 - Ice lateral melting                (namthd_da)
+!!             11 - Ice growth in open water           (namthd_do)
+!!             12 - Ice salinity                       (namthd_sal)
+!!             13 - Ice melt ponds                     (namthd_pnd)
+!!             14 - Ice initialization                 (namini)
+!!             15 - Ice/snow albedos                   (namalb)
+!!             16 - Ice diagnostics                    (namdia)
+!!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+!
+!------------------------------------------------------------------------------
+&nampar         !   Generic parameters
+!------------------------------------------------------------------------------
+   cn_icerst_in     = "ORCA36-T431_00000000_restart_ice"    !  suffix of ice restart name (input)
+   cn_icerst_out    = "restart_ice"   !  suffix of ice restart name (output)
+   cn_icerst_indir  = "/ec/res6/scratch/ar5/ORCA36-T431-RST/" !  directory to read   input ice restarts
+   cn_icerst_outdir = "/ec/res6/scratch/ar5/ORCA36-T431-RST/" !  directory to write output ice restarts
+/
+!------------------------------------------------------------------------------
+&namitd         !   Ice discretization
+!------------------------------------------------------------------------------
+/
+!------------------------------------------------------------------------------
+&namdyn         !   Ice dynamics
+!------------------------------------------------------------------------------
+   ln_landfast_L16  = .true.          !  landfast: parameterization from Lemieux 2016
+/
+!------------------------------------------------------------------------------
+&namdyn_rdgrft  !   Ice ridging/rafting
+!------------------------------------------------------------------------------
+          ! -- ice_rdgrft_strength -- !
+   ln_str_H79       = .true.          !  ice strength param.: Hibler_79   => P = pstar*<h>*exp(-c_rhg*A)
+      rn_pstar      =   2.5e+04       !     ice strength thickness parameter [N/m2]
+      rn_crhg       =  20.0           !     ice strength conc. parameter (-)
+                   ! -- ice_rdgrft -- !
+   rn_csrdg         =   0.5           !  fraction of shearing energy contributing to ridging
+              ! -- ice_rdgrft_prep -- !
+   ln_partf_exp     = .true.          !  Exponential ridging participation function (Lipscomb, 2007)
+      rn_astar      =   0.03          !     exponential measure of ridging ice fraction [set to 0.05 if hstar=100]
+   ln_ridging       = .true.          !  ridging activated (T) or not (F)
+      rn_hstar      =  25.0           !     determines the maximum thickness of ridged ice [m] (Hibler, 1980)
+   ln_rafting       = .true.          !  rafting activated (T) or not (F)
+/
+!------------------------------------------------------------------------------
+&namdyn_rhg     !   Ice rheology
+!------------------------------------------------------------------------------
+   ln_rhg_EVP       = .true.          !  EVP rheology
+   ln_rhg_EAP       = .false.         !  EAP rheology
+      ln_aEVP       = .true.          !     adaptive rheology (Kimmritz et al. 2016 & 2017)
+      rn_creepl     =   1.0e-12       !     creep limit [1/s]
+      rn_ecc        =   1.4           !     eccentricity of the elliptical yield curve          
+      nn_nevp       = 400             !     number of EVP subcycles                             
+/
+!------------------------------------------------------------------------------
+&namdyn_adv     !   Ice advection
+!------------------------------------------------------------------------------
+/
+!------------------------------------------------------------------------------
+&namsbc         !   Ice surface boundary conditions
+!------------------------------------------------------------------------------
+   rn_cio           =   2.3e-03       !  ice-ocean drag coefficient (-)
+/
+!------------------------------------------------------------------------------
+&namthd         !   Ice thermodynamics
+!------------------------------------------------------------------------------
+/
+!------------------------------------------------------------------------------
+&namthd_zdf     !   Ice heat diffusion
+!------------------------------------------------------------------------------
+/
+!------------------------------------------------------------------------------
+&namthd_da      !   Ice lateral melting
+!------------------------------------------------------------------------------
+/
+!------------------------------------------------------------------------------
+&namthd_do      !   Ice growth in open water
+!------------------------------------------------------------------------------
+/
+!------------------------------------------------------------------------------
+&namthd_sal     !   Ice salinity
+!------------------------------------------------------------------------------
+/
+!------------------------------------------------------------------------------
+&namthd_pnd     !   Melt ponds
+!------------------------------------------------------------------------------
+   ln_pnd            = .true.         !  activate melt ponds or not
+/
+!------------------------------------------------------------------------------
+&namini         !   Ice initialization
+!------------------------------------------------------------------------------
+   ln_iceini        = .true.          !  activate ice initialization (T) or not (F)
+   nn_iceini_file   =   0             !     0 = Initialise sea ice based on SSTs
+                                      !     1 = Initialise sea ice from single category netcdf file
+                                      !     2 = Initialise sea ice from multi category restart file
+/
+!------------------------------------------------------------------------------
+&namalb         !   albedo parameters
+!------------------------------------------------------------------------------
+/
+!------------------------------------------------------------------------------
+&namdia         !   Diagnostics
+!------------------------------------------------------------------------------
+/

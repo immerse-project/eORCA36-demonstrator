@@ -1,0 +1,130 @@
+#!/bin/bash
+#SBATCH -J N36T431
+#SBATCH --qos=np
+#SBATCH -N 178
+#SBATCH  --time=08:00:00
+#SBATCH -o N36T431.out
+#SBATCH -e N36T431.err
+
+#set -xv
+export QSUB_WORKDIR=`/bin/pwd`
+cd $QSUB_WORKDIR
+
+module purge
+module load prgenv/intel openmpi netcdf4-parallel
+module list
+
+. ./env.ksh
+#########################################################################
+#
+#########################################################################
+
+#sources
+MAINDIR=$PERM/nemo_4.2.0
+XIODIR=/perm/ar5/LIBS/intel/xios_trunk_r2311
+
+#Configuration name
+CONFIG1=GLO
+
+#directories
+AWUSER=${SCRATCH}
+CTLDIR=`/bin/pwd`
+RUNDIR=$AWUSER/${CONFIG}-RUN
+INDIR=$AWUSER/ORCA36-BENCH
+
+#########################################################################
+#
+#########################################################################
+mkdir -p ${DIRRUN} ; cd ${DIRRUN}
+
+#EXECUTABLES
+cp ${XIODIR}/bin/xios_server.exe ${DIRRUN}
+cp ${MAINDIR}/cfgs/${CONFIG1}/BLD/bin/nemo.exe ${DIRRUN}
+
+#NAMLST & XML 
+cp ${CTLDIR}/NAMLST/namelist* ${DIRRUN} 
+cp ${CTLDIR}/XML/*.xml ${DIRRUN} 
+
+#Configuration & forcing files
+ln -sf ${INDIR}/*.nc ${DIRRUN}
+
+
+#########################################################################
+#
+#########################################################################
+
+
+#########################################################################
+#
+#########################################################################
+cd ${DIRRUN}
+
+MULTIPROG_CONF=config_file
+BIN_NEMO=nemo.exe
+BIN_XIOS=xios_server.exe
+MACHINEFILE=machinefile
+
+#-------------------------------------------------
+rm -f $MACHINEFILE
+
+# Get allocated nodelist
+mylist=`scontrol show hostnames`
+arr=($mylist)
+
+# NEMO-XIOS do not share nodes
+NEMO_NODES=$(((NEMO_PROCS+NEMO_DIST-1)/NEMO_DIST))
+XIOS_NODES=$(((XIOS_PROCS+XIOS_DIST-1)/XIOS_DIST))
+TOT_NODES=$((NEMO_NODES+XIOS_NODES))
+if [ $TOT_NODES -ne $SLURM_JOB_NUM_NODES ]; then
+   echo "Mis-match of allocated and required number of nodes."
+   scancel $SLURM_JOB_ID
+fi
+
+# Assigning NEMO procs to nodes
+n=-1
+for ((nemo=0; nemo<$NEMO_PROCS; nemo+=$NEMO_DIST)); do
+   n=$((n+1))
+   if [[ $((nemo+NEMO_DIST)) -gt $NEMO_PROCS ]]; then
+      NEMO_DIST=$((NEMO_PROCS-nemo))
+   fi
+   for ((d=0; d<$NEMO_DIST; d++)); do
+      echo "${arr[$n]}" >> $MACHINEFILE
+   done
+done
+
+# Assigning XIOS procs to nodes
+m=$n
+for ((xios=0; xios<$XIOS_PROCS; xios+=$XIOS_DIST)); do
+   m=$((m+1))
+   if [[ $((xios+XIOS_DIST)) -gt $XIOS_PROCS ]]; then
+      XIOS_DIST=$((XIOS_PROCS-xios))
+   fi
+   for ((d=0; d<$XIOS_DIST; d++)); do
+      echo "${arr[$m]}" >> $MACHINEFILE
+   done
+done
+
+export SLURM_HOSTFILE=$MACHINEFILE
+
+# Slurm MPMD config_file
+rm -f config_file
+
+cat > config_file <<EOF
+0-$(( $NEMO_PROCS -1)) ./nemo.exe
+$NEMO_PROCS-$(( $NEMO_PROCS + $XIOS_PROCS -1)) ./xios_server.exe
+EOF
+
+#########################################################################
+# Launch computation
+#########################################################################
+export FORT_BUFFERED=yes
+srun --ntasks=$(($NEMO_PROCS+$XIOS_PROCS)) --multi-prog config_file
+#cp timing.output ${DIRCTL}/timing.output_${CLTEST}_${NEMO_PROCS}_TEST1
+#srun --ntasks=$(($NEMO_PROCS+$XIOS_PROCS)) --multi-prog config_file
+#cp timing.output ${DIRCTL}/timing.output_${CLTEST}_${NEMO_PROCS}_TEST2
+#srun --ntasks=$(($NEMO_PROCS+$XIOS_PROCS)) --multi-prog config_file
+#cp timing.output ${DIRCTL}/timing.output_${CLTEST}_${NEMO_PROCS}_TEST3
+
+#########################################################################
+##                                END                                  ##
+#########################################################################

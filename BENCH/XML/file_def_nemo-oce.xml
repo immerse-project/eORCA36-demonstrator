@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<!--
+============================================================================================================
+=                                           output files definition                                        =
+=                                            Define your own filesfor ocean dynamics context               =
+=                                         put the variables you want...                                    =
+============================================================================================================
+    -->
+   
+   <file_definition type="multiple_file" name="@expname@_@freq@" sync_freq="1d" min_digits="4">
+
+      <!-- <file_group src="./file_def_nemo-oce-3D-1h.xml"/> -->
+      <!-- <file_group src="./file_def_nemo-oce-3D-3h.xml"/> -->
+      <!-- <file_group src="./file_def_nemo-oce-2D-1h.xml"/> -->
+      <!-- <file_group src="./file_def_nemo-oce-3D-1d.xml"/> -->
+      <!-- <file_group src="./file_def_nemo-oce-3D-1mo.xml"/> -->
+      <file_group src="./file_def_nemo-oce-2D-1h.xml"/>
+      <file_group src="./file_def_nemo-oce-3D-3h.xml"/>
+      <file_group src="./file_def_nemo-oce-3D-1d.xml"/>
+
+   </file_definition>
+    
+
+
+

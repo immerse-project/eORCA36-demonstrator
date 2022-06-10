@@ -1,0 +1,49 @@
+#!/bin/bash
+#SBATCH -J INTERPIFS
+#SBATCH --qos=nf
+#SBATCH --ntasks=16
+#SBATCH --time=01:00:00
+#SBATCH --mem-per-cpu=4G
+#SBATCH -o INTERPIFS.out
+#SBATCH -e iINTERPIFS.err
+set -xv
+
+export QSUB_WORKDIR=`/bin/pwd`
+cd $QSUB_WORKDIR
+
+. ./env.ksh
+
+module purge
+module load prgenv/intel openmpi netcdf4-parallel cdo
+module list
+#########################################################################
+#
+#########################################################################
+CTLDIR=`/bin/pwd`
+
+CONF=eORCA36
+lforcnok=0
+d=y20121001
+de=y20121002
+
+while [ $d -le ${de} ] ; do
+   yy=`echo $d | cut -c1-4`
+   mm=`echo $d | cut -c5-6`
+   dd=`echo $d | cut -c7-8`
+   cld=y${yy}m${mm}d${dd}
+
+   for v in sosudosw sosudolw sotemair sohumspe sowaprec sosnowfa somslpre ; do
+      ${CTLDIR}/make_CDO_IFS.ksh $v $d $d $CONF
+   done
+
+   for v in sowinu10 ; do
+         ${CTLDIR}/make_CDO_IFS_WIND.ksh $v $d $d $CONF
+   done
+
+   d=`date --date="${d} + 1 days " +%Y%m%d`
+done
+
+
+#########################################################################
+##                                END                                  ##
+#########################################################################

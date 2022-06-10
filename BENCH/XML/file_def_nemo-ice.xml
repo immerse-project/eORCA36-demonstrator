@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+    <!-- $id$ -->
+    
+ <!--
+============================================================================================================
+=                                           output files definition                                        =
+=                                      Define your own files for sea ice                                   =
+=                                         put the variables you want...                                    =
+============================================================================================================
+ -->
+    
+ <file_definition type="multiple_file" name="@expname@_@freq@" sync_freq="1d" min_digits="4">
+
+      <!-- <file_group src="./file_def_nemo-ice-1h.xml"/>     -->
+      <!-- <file_group src="./file_def_nemo-ice-1d.xml"/>     -->
+      <!-- <file_group src="./file_def_nemo-ice-1mo.xml"/>     -->
+      <file_group src="./file_def_nemo-ice-1d.xml"/>
+ 
+ </file_definition>
+ 

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+      <file_group id="3h" output_freq="3h" split_freq="1d"  output_level="10" enabled=".TRUE."> <!-- 1h files -->
+
+         <file id="file31" name_suffix="_gridT" description="ocean T grid variables" >
+            <field field_ref="toce"      name="thetao"  operation="instant" />
+            <field field_ref="soce"      name="so"      operation="instant" />
+            <!-- <field field_ref="toce"      name="votemper"  operation="instant" prec="2" add_offset="20" scale_factor="1.e-3" /> -->
+            <!-- <field field_ref="soce"      name="vosaline"  operation="instant" prec="2" add_offset="20" scale_factor="1.e-3" /> -->
+         </file>
+      </file_group>
+

@@ -1,0 +1,41 @@
+#!/bin/bash
+#SBATCH -J D36T424
+#SBATCH --qos=np
+#SBATCH -N 1
+#SBATCH  --time=10:00:00
+#SBATCH  --mem=247000
+#SBATCH -o /ec/res6/scratch/ar5/JOB/D36T424.%j.out
+#SBATCH -e /ec/res6/scratch/ar5/JOB/D36T424.%j.err
+set -xv
+export QSUB_WORKDIR=`/bin/pwd`
+cd $QSUB_WORKDIR
+DIRCTL=`pwd`
+
+#########################################################################
+#
+#########################################################################
+DIRVPPI=$SCRATCH/ORCA36-IN
+
+TOOLDIR=$PERM/nemoref_trunk_r14365/tools/REBUILD_NEMO_4X
+OCEANCORES=1024
+DIRRUN=$SCRATCH/eORCA_R36-BATHYRUN
+
+fo=${DIRVPPI}/eORCA_R36_domcfg_v3.1.nc
+mo=${DIRVPPI}/eORCA_R36_meshmask_v3.1.nc
+#########################################################################
+#
+#########################################################################
+
+for f in rebuild_nemo rebuild_nemo.exe ; do
+   cp ${TOOLDIR}/${f} ${DIRRUN}/
+done
+
+cd ${DIRRUN}
+./rebuild_nemo domain_cfg $OCEANCORES
+./rebuild_nemo mesh_mask  $OCEANCORES
+
+
+cp ${DIRRUN}/domain_cfg.nc ${fo}
+cp ${DIRRUN}/mesh_mask.nc ${mo}
+
+#########################################################################

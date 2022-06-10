@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+      <file_group id="1h" output_freq="1h" split_freq="1d"  output_level="10" enabled=".TRUE."> <!-- 1h files -->
+
+        <file id="file1" name_suffix="_gridT" description="ocean T grid variables" >
+          <field field_ref="sst"          name="tos"       />
+          <field field_ref="sss"          name="sos"       />
+          <field field_ref="ssh"          name="sossheig"  />
+          <field field_ref="ssh_ib"       name="ssh_ib"    />
+          <field field_ref="botpres"      name="sodynhei" operation="average" />
+          <field field_ref="sshdyn"       name="sshdyn"   operation="average" />
+        </file>
+
+        <file id="file3" name_suffix="_gridU" description="ocean T grid variables" >
+          <field field_ref="ssu"          name="uos"       />
+        </file>
+
+        <file id="file4" name_suffix="_gridV" description="ocean T grid variables" >
+          <field field_ref="ssv"          name="vos"       />
+        </file>
+
+      </file_group>

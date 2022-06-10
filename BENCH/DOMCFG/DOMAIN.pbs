@@ -1,0 +1,47 @@
+#!/bin/bash
+#SBATCH -J D36T426
+#SBATCH --qos=np
+#SBATCH -N 16
+#SBATCH  --time=10:00:00
+#SBATCH  --mem=247000
+#SBATCH -o /ec/res6/scratch/ar5/JOB/D36T426.%j.out
+#SBATCH -e /ec/res6/scratch/ar5/JOB/D36T426.%j.err
+set -xv
+export QSUB_WORKDIR=`/bin/pwd`
+cd $QSUB_WORKDIR
+DIRCTL=`pwd`
+
+
+#########################################################################
+TOOLDIR=$PERM/nemoref_trunk_r14365/tools/DOMAINcfg
+OCEANCORES=1024
+OMP_NUM_CORE_PER_NODE=64
+
+DIRRUN=$SCRATCH/eORCA_R36-BATHYRUN
+DIRVPPI=$SCRATCH/ORCA36-IN/
+#########################################################################
+mkdir -p $DIRRUN ; lfs setstripe  -c 80 -S 80m $DIRRUN 
+rm -f $DIRRUN/*
+
+for f in make_domain_cfg.exe field_def.xml  domain_def.xml iodef.xml namelist_ref ; do
+   cp ${TOOLDIR}/${f} ${DIRRUN}/
+done
+
+cp ${DIRCTL}/namelist_cfg_trunk_r14365_isf_3.1 ${DIRRUN}/namelist_cfg
+
+MESH=${DIRVPPI}/eORCA_R36_coordinates_v3.1.nc
+BATHY=${DIRVPPI}/eORCA_R36_bathymetry_v3.1.nc
+
+
+ln -sf ${MESH}  ${DIRRUN}/coordinates.nc
+ln -sf ${BATHY} ${DIRRUN}/bathy_meter.nc
+ln -sf ${BATHY} ${DIRRUN}/isf_draft_meter.nc
+
+
+module list
+
+#########################################################################
+cd ${DIRRUN}
+srun -n $OCEANCORES --ntasks-per-node=${OMP_NUM_CORE_PER_NODE} ./make_domain_cfg.exe
+
+#########################################################################

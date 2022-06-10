@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<simulation>
+
+<!-- ============================================================================================ -->
+<!-- XIOS context                                                                                 -->
+<!-- ============================================================================================ -->
+  <context id="xios" >
+     <variable_definition>
+
+        <variable_group id="buffer">
+           <variable id="min_buffer_size"       type="int">10000000</variable>
+           <variable id="optimal_buffer_size"   type="string">performance</variable>
+           <variable id="buffer_factor_size"    type="double">0.8</variable>
+        </variable_group>
+
+        <variable_group id="parameters" >
+            <variable id="using_server"         type="bool">true</variable>
+            <variable id="info_level"           type="int">10</variable>
+            <variable id="print_file"           type="bool">false</variable>
+            <variable id="using_server2"        type="bool">false</variable>
+            <variable id="ratio_server2"        type="int">50</variable>
+            <variable id="number_pools_server2" type="int">1</variable>
+            <variable id="pure_one_sided"       type="bool">false</variable>
+            <variable id="check_event_sync"     type="bool">true</variable>
+        </variable_group>
+
+      <variable id="activate_non_distributed_transformation" type="bool">false</variable>
+
+      </variable_definition>
+  </context>
+
+
+<!-- using_server2
+
+     level1: 1
+     level2: 50pools*1procs=50
+     tot=51 ; ratio_server2=50 ; number_pools_server2=50
+-->
+
+<!-- ============================================================================================ -->
+<!-- NEMO  CONTEXT add and suppress the components you need                                       -->
+<!-- ============================================================================================ -->
+
+  <context id="nemo" src="./context_nemo.xml"/>       <!--  NEMO       -->
+
+</simulation>
