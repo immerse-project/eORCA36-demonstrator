@@ -21,7 +21,7 @@ Results can be found [here](https://github.com/immerse-project/eORCA36-demonstra
 
 ## Installation and execution:
 
-IN [BENCH](ttps://github.com/immerse-project/eORCA36-demonstrator/blob/main/BENCH)
+In [BENCH](https://github.com/immerse-project/eORCA36-demonstrator/blob/main/BENCH)
 
 
 ## Input files
