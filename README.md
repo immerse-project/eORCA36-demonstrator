@@ -15,6 +15,10 @@ eORCA36 hourly vorticity
 
 Results can be found [here](https://github.com/immerse-project/eORCA36-demonstrator/blob/main/doc/IMMERSE_MS35.pdf).
 
+## Download bench
+
+`git clone git@github.com:immerse-project/eORCA36-demonstrator.git`
+
 ## Installation and execution:
 
 See ???????
