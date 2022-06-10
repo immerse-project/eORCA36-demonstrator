@@ -19,12 +19,6 @@ Results can be found [here](https://github.com/immerse-project/eORCA36-demonstra
 
 `git clone git@github.com:immerse-project/eORCA36-demonstrator.git`
 
-## Installation and execution:
+## Bench: installation and execution:
 
-See ???????
-
-## Input files
-
-Configuration files: ``` ftp://ftp.mercator-ocean.fr/download/users/cbricaud/BENCH-eORCA36-INPUT.tar.gz ```
-
-Forcing files      : ``` ftp://ftp.mercator-ocean.fr/download/users/cbricaud/BENCH-eORCA36-INPUT.tar.gz ```
+In [BENCH](https://github.com/immerse-project/eORCA36-demonstrator/blob/main/BENCH)
