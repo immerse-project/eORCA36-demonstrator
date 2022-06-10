@@ -8,7 +8,7 @@ Compare to the the previous 1/36° global [demonstrator](https://github.com/imme
 
 ![plot](https://github.com/immerse-project/eORCA36-demonstrator/blob/main/figs/socurloverf_ORCA36-T426_ALL_2016-10-08_00_seismic_1.png)<br>
 <p align = "center">
-eORCA36 hourly vorticity#
+eORCA36 hourly vorticity
 </p>
 
 
