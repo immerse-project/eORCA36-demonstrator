@@ -11,6 +11,9 @@ Compare to the the previous 1/36° global [demonstrator](https://github.com/imme
 eORCA36 hourly vorticity
 </p>
 
+## HPC tests
+
+Results can be found [here](https://github.com/immerse-project/eORCA36-demonstrator/blob/main/doc/IMMERSE_MS35.pdf).
 
 ## Installation and execution:
 
