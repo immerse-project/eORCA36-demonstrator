@@ -5,7 +5,7 @@
 
 Download XIOS:
 
-`svn co -r 2311 http://forge.ipsl.jussieu.fr/ioserver/svn/XIOS/trunk XIOS`
+`svn co -r 2311 http://forge.ipsl.jussieu.fr/ioserver/svn/XIOS2/trunk XIOS`
 
 Downlaod NEMO:
 
