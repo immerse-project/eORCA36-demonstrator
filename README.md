@@ -2,6 +2,12 @@
 
 This page describe the way to build the extended 1/36° global configuration (eORCA36) based on  [NEMO OGCM](https://www.nemo-ocean.eu/).
 
+This bench has been developped in the framework of the EU H2020 [IMMERSE project](https://immerse-ocean.eu/) and [ESIWACE2 project](https://www.esiwace.eu/the-project/past-phases/esiwace2-1)
+
+![logos](figs/IMMERSE_ESIWACE2_projects.png)
+
+
+
 This bench represents the milestone MS35 "global 1/36 configuration upgrade following" for [IMMERSE](http://immerse-ocean.eu/) H2020 project.
 
 Compare to the the previous 1/36° global [demonstrator](https://github.com/immerse-project/ORCA36-demonstrator/), the domain has been extended southward to include the Under Ice Shelf Seas and the NEMO code has been upgraded to the [4.2 release](https://forge.nemo-ocean.eu/nemo/nemo/-/blob/4.2.0/README.rst).
